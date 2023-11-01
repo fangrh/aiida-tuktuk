@@ -4,4 +4,4 @@ __author__ = """aiida-tuktuk"""
 __email__ = 'ruihuanfang@gmail.com'
 __version__ = '0.1.0'
 
-from aiida_tuktuk import *
+from aiida_tuktuk.aiida_tuktuk import *

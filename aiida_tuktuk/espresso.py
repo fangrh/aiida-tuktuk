@@ -75,3 +75,18 @@ def format_path(path):
     path_labels.append(path[-1][1])
     path_labels_latex = format_latex_labels(path_labels)
     return path_labels_latex
+
+def get_builder_from_baseworkchain(pw_work_chain):
+    from aiida.orm import KpointsData
+    from aiida_quantumespresso.calculations.pw import PwCalculation
+    kpoints = KpointsData()
+    kpoints.set_cell_from_structure(pw_work_chain.pw.structure)
+    kpoints.set_kpoints_mesh_from_density(pw_work_chain.kpoints_distance.value)
+    pw_builder = PwCalculation.get_builder()
+    pw_builder.parameters = pw_work_chain.pw.parameters
+    pw_builder.kpoints = kpoints
+    pw_builder.structure = pw_work_chain.pw.structure
+    pw_builder.code = pw_work_chain.pw.code
+    pw_builder.metadata = pw_work_chain.pw.metadata
+    pw_builder.pseudos = pw_work_chain.pw.pseudos
+    return pw_builder
